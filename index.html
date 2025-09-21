@@ -1,67 +1,618 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Tourist Weather</title>
-  <style>
-    body {
-      font-family: Arial, sans-serif;
-      text-align: center;
-      background: #f0f0f0;
-      padding: 20px;
-    }
-    .city {
-      display: inline-block;
-      margin: 10px;
-      padding: 15px 25px;
-      background: white;
-      border-radius: 10px;
-      box-shadow: 0 2px 5px rgba(0,0,0,0.2);
-      cursor: pointer;
-      font-size: 18px;
-    }
-    .weather-box {
-      margin-top: 20px;
-      padding: 15px;
-      background: #fff;
-      border-radius: 10px;
-      display: inline-block;
-      box-shadow: 0 2px 5px rgba(0,0,0,0.2);
-    }
-  </style>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Tourshield Registration - Tourshield</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;600&display=swap');
+        @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700&display=swap');
+        
+        * { box-sizing: border-box; }
+        
+        body {
+            font-family: 'Poppins', sans-serif;
+            background: linear-gradient(135deg, #ff9a9e 0%, #fad0c4 99%, #fad0c4 100%);
+            margin: 0;
+            padding: 0;
+            color: #2c3e50;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        header {
+            position: relative;
+            background: #34495e;
+            color: white;
+            padding: 1rem 2rem;
+            display: flex;
+            align-items: center;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+            justify-content: space-between;
+        }
+
+        header h1 {
+            margin: 0;
+            font-weight: 700;
+            font-size: 1.8rem;
+            letter-spacing: 1.2px;
+            display: flex;
+            align-items: center;
+            gap: 0.6rem;
+        }
+
+        #panic-btn {
+            background: linear-gradient(135deg, #e74c3c, #c0392b);
+            border: none;
+            border-radius: 12px;
+            width: 60px;
+            height: 48px;
+            cursor: pointer;
+            box-shadow: 0 4px 14px rgba(231, 76, 60, 0.4);
+            transition: all 0.3s ease;
+            outline: none;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 20px;
+            color: white;
+            font-weight: bold;
+            position: relative;
+            animation: pulse 2s infinite;
+        }
+        
+        #panic-btn:hover, #panic-btn:focus { 
+            background: linear-gradient(135deg, #c0392b, #a93226);
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(231, 76, 60, 0.6);
+        }
+        
+        #panic-btn::before {
+            content: '🚨';
+            font-size: 24px;
+            filter: drop-shadow(0 2px 4px rgba(0,0,0,0.3));
+        }
+
+        @keyframes pulse {
+            0% { box-shadow: 0 4px 14px rgba(231, 76, 60, 0.4); }
+            50% { box-shadow: 0 4px 20px rgba(231, 76, 60, 0.8); }
+            100% { box-shadow: 0 4px 14px rgba(231, 76, 60, 0.4); }
+        }
+
+        main {
+            flex-grow: 1;
+            max-width: 900px;
+            margin: 2rem auto 3rem;
+            background: white;
+            border-radius: 16px;
+            padding: 2.5rem 3rem;
+            box-shadow: 0 12px 30px rgba(0,0,0,0.15);
+        }
+
+        h2 {
+            text-align: center;
+            color: #e67e22;
+            margin-bottom: 2rem;
+            font-weight: 700;
+            font-size: 2rem;
+            letter-spacing: 1.1px;
+        }
+
+        p.welcome {
+            text-align: center;
+            font-size: 1.2rem;
+            margin-bottom: 2rem;
+            color: #34495e;
+            font-weight: 600;
+        }
+
+        form {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1.5rem 2rem;
+        }
+
+        label {
+            font-weight: 600;
+            color: #34495e;
+            margin-bottom: 0.4rem;
+            display: block;
+        }
+
+        input, select, textarea {
+            width: 100%;
+            padding: 0.7rem 1rem;
+            border: 2px solid #e67e22;
+            border-radius: 10px;
+            font-size: 1rem;
+            transition: border-color 0.3s ease;
+            font-family: 'Poppins', sans-serif;
+        }
+
+        input:focus, select:focus, textarea:focus {
+            border-color: #d35400;
+            outline: none;
+        }
+
+        select[multiple] { height: 140px; }
+        textarea { resize: vertical; min-height: 80px; }
+        .full-width { grid-column: 1 / -1; }
+
+        button[type="submit"] {
+            grid-column: 1 / -1;
+            background: #e67e22;
+            color: white;
+            font-weight: 700;
+            padding: 1rem;
+            border: none;
+            border-radius: 12px;
+            cursor: pointer;
+            font-size: 1.2rem;
+            letter-spacing: 1px;
+            box-shadow: 0 6px 15px rgba(230,126,34,0.6);
+            transition: background 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        button[type="submit"]:hover {
+            background: #d35400;
+            box-shadow: 0 8px 20px rgba(211,84,0,0.8);
+        }
+
+        #tourist-id {
+            margin-top: 2rem;
+            background: linear-gradient(135deg, #f9e79f, #f4d03f);
+            border: 2px solid #f1c40f;
+            padding: 1.5rem 2rem;
+            border-radius: 15px;
+            font-weight: 700;
+            color: #b7950b;
+            text-align: center;
+            font-size: 1.3rem;
+            letter-spacing: 1.2px;
+            user-select: all;
+            display: none;
+            font-family: 'Montserrat', sans-serif;
+            box-shadow: 0 8px 25px rgba(241, 196, 15, 0.3);
+            border-left: 6px solid #27ae60;
+        }
+
+        #location-status {
+            margin-top: 1rem;
+            font-style: italic;
+            color: #7f8c8d;
+            text-align: center;
+            font-size: 0.95rem;
+        }
+
+        .checkbox-group {
+            grid-column: 1 / -1;
+            display: flex;
+            flex-direction: column;
+            gap: 0.6rem;
+            font-size: 0.95rem;
+            color: #34495e;
+        }
+        .checkbox-group label { font-weight: 600; }
+        .checkbox-group input[type="checkbox"] { width: 18px; height: 18px; cursor: pointer; }
+
+        .panic-popup-overlay {
+            display: none;
+            position: fixed;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background: rgba(44, 62, 80, 0.8);
+            z-index: 9999;
+            justify-content: center;
+            align-items: center;
+        }
+        
+        .panic-popup {
+            background: #fff;
+            border-radius: 20px;
+            padding: 2.5rem;
+            max-width: 380px;
+            margin: 0 auto;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.3);
+            text-align: center;
+            position: relative;
+            border: 3px solid #e74c3c;
+        }
+        
+        .close-popup {
+            position: absolute;
+            right: 1.2rem;
+            top: 1rem;
+            font-size: 1.8rem;
+            color: #e74c3c;
+            cursor: pointer;
+            font-weight: bold;
+            transition: color 0.3s ease;
+        }
+        
+        .close-popup:hover {
+            color: #c0392b;
+        }
+        
+        .popup-options button {
+            display: block;
+            width: 100%;
+            margin: 1rem 0;
+            background: linear-gradient(135deg, #e74c3c, #c0392b);
+            color: #fff;
+            border: none;
+            border-radius: 10px;
+            font-weight: bold;
+            font-size: 1rem;
+            padding: 0.8rem 0;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(231, 76, 60, 0.3);
+        }
+        
+        .popup-options button:hover { 
+            background: linear-gradient(135deg, #c0392b, #a93226);
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(231, 76, 60, 0.5);
+        }
+
+        .success-message {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background: linear-gradient(135deg, #27ae60, #2ecc71);
+            color: white;
+            padding: 2rem 3rem;
+            border-radius: 15px;
+            font-family: 'Montserrat', sans-serif;
+            font-weight: 600;
+            font-size: 1.2rem;
+            text-align: center;
+            box-shadow: 0 15px 35px rgba(39, 174, 96, 0.4);
+            z-index: 10000;
+            border: 3px solid #1e8449;
+            animation: slideIn 0.5s ease;
+        }
+
+        @keyframes slideIn {
+            from {
+                opacity: 0;
+                transform: translate(-50%, -60%);
+            }
+            to {
+                opacity: 1;
+                transform: translate(-50%, -50%);
+            }
+        }
+
+        #features {
+            max-width: 900px;
+            margin: 3rem auto 1rem;
+            background: #fef9e7;
+            border-radius: 16px;
+            padding: 2rem 3rem;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+        }
+
+        #features h3 {
+            text-align: center;
+            color: #d35400;
+            font-weight: 700;
+            font-size: 1.8rem;
+            margin-bottom: 1.5rem;
+            letter-spacing: 1.1px;
+        }
+
+        .feature-list {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-around;
+            gap: 2rem;
+        }
+
+        .feature-item {
+            flex: 1 1 250px;
+            background: white;
+            border-radius: 12px;
+            padding: 1.5rem 1.8rem;
+            box-shadow: 0 6px 15px rgba(211,84,0,0.15);
+            transition: transform 0.3s ease;
+        }
+
+        .feature-item:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 12px 30px rgba(211,84,0,0.3);
+        }
+
+        .feature-item h4 {
+            color: #e67e22;
+            margin-bottom: 0.8rem;
+            font-weight: 700;
+            font-size: 1.2rem;
+        }
+        .feature-item p {
+            color: #555;
+            font-size: 0.95rem;
+            line-height: 1.4;
+        }
+
+        @media (max-width: 900px) {
+            form { grid-template-columns: 1fr; }
+            #features .feature-list { flex-direction: column; gap: 1.5rem; }
+        }
+
+        footer {
+            background: #34495e;
+            color: #fff;
+            text-align: center;
+            padding: 1.2rem 0;
+            font-weight: 600;
+            font-size: 1rem;
+            letter-spacing: 1px;
+            margin-top: auto;
+        }
+    </style>
 </head>
 <body>
+    <header>
+        <h1>Tourshield</h1>
+        <button id="panic-btn" aria-label="Emergency" tabindex="0"></button>
+    </header>
 
-  <h1>🌍 Tourist Weather Conditions</h1>
-  <div>
-    <div class="city" onclick="getWeather('Hyderabad')">Hyderabad</div>
-    <div class="city" onclick="getWeather('Delhi')">Delhi</div>
-    <div class="city" onclick="getWeather('Mumbai')">Mumbai</div>
-    <div class="city" onclick="getWeather('Chennai')">Chennai</div>
-  </div>
+    <main>
+        <p class="welcome">Welcome to Tourshield! Register below to get your Blockchain Tourist ID and enjoy safe travel with AI-powered geofencing.</p>
+        <h2>Tourist Registration</h2>
+        
+        <form id="registration-form" novalidate>
+            <label for="name">Full Name *</label>
+            <input type="text" id="name" name="name" placeholder="Your full name" required />
 
-  <div id="weather" class="weather-box"></div>
+            <label for="phone">Phone Number *</label>
+            <input type="tel" id="phone" name="phone" placeholder="+91 9876543210" pattern="^+?\d{10,15}$" required />
 
-  <script>
-    const apiKey = "4838eed0766f8d8c4a99b7a71780c85d"; // your key
+            <label for="email">Email *</label>
+            <input type="email" id="email" name="email" placeholder="example@mail.com" required />
 
-    async function getWeather(city) {
-      const url = `https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${apiKey}&units=metric`;
-      try {
-        const res = await fetch(url);
-        const data = await res.json();
-        document.getElementById("weather").innerHTML = `
-          <h2>${data.name}</h2>
-          <p>🌥️ ${data.weather[0].description}</p>
-          <p>🌡️ Temp: ${data.main.temp} °C</p>
-          <p>💨 Wind: ${data.wind.speed} m/s</p>
-        `;
-      } catch (error) {
-        document.getElementById("weather").innerHTML = `<p>Error fetching weather</p>`;
-      }
-    }
-  </script>
+            <label for="language">Preferred Language *</label>
+            <select id="language" name="language" required>
+                <option value="" disabled selected>Select language</option>
+                <option>English</option>
+                <option>Hindi</option>
+                <option>Telugu</option>
+                <option>Urdu</option>
+                <option>Assamese</option>
+                <option>Bengali</option>
+                <option>Nepali</option>
+                <option>Manipuri</option>
+                <option>Other</option>
+            </select>
 
+            <label for="country">Country *</label>
+            <select id="country" name="country" required>
+                <option value="" disabled selected>Select country</option>
+                <option>India</option>
+                <option>Bangladesh</option>
+                <option>Nepal</option>
+                <option>Bhutan</option>
+                <option>Other</option>
+            </select>
+
+            <label for="emergency-contact">Emergency Contact Number</label>
+            <input type="tel" id="emergency-contact" name="emergency-contact" placeholder="+91 9123456789" pattern="^+?\d{10,15}$" />
+
+            <label for="transport">Preferred Mode of Transport</label>
+            <select id="transport" name="transport">
+                <option value="" disabled selected>Select transport</option>
+                <option>Car</option>
+                <option>Bus</option>
+                <option>Train</option>
+                <option>Flight</option>
+                <option>Bike</option>
+                <option>Other</option>
+            </select>
+
+            <label for="kyc-type">KYC Document *</label>
+            <select id="kyc-type" name="kyc-type" required>
+                <option value="" disabled selected>Select KYC Document</option>
+                <option>Aadhar</option>
+                <option>Passport</option>
+            </select>
+
+            <label for="kyc-id">KYC Document Number *</label>
+            <input type="text" id="kyc-id" name="kyc-id" placeholder="Enter your Aadhar/Passport Number" required pattern=".{6,}">
+
+            <label for="places" class="full-width">Places to Visit in North East India * (Select one or more)</label>
+            <select id="places" name="places" multiple required class="full-width">
+                <option>Kaziranga National Park (Assam)</option>
+                <option>Tawang Monastery (Arunachal Pradesh)</option>
+                <option>Shillong (Meghalaya)</option>
+                <option>Loktak Lake (Manipur)</option>
+                <option>Majuli Island (Assam)</option>
+                <option>Cherrapunji (Meghalaya)</option>
+                <option>Ziro Valley (Arunachal Pradesh)</option>
+                <option>Guwahati (Assam)</option>
+                <option>Namdapha National Park (Arunachal Pradesh)</option>
+                <option>Imphal (Manipur)</option>
+                <option>Others</option>
+            </select>
+            <small style="color:#7f8c8d; font-size:0.85rem; margin-bottom:1rem; display:block;">Hold Ctrl (Cmd on Mac) to select multiple places</small>
+
+            <div class="checkbox-group">
+                <input type="checkbox" id="agree" name="agree" required />
+                <label for="agree">I agree to the <a href="#" style="color:#e67e22; text-decoration:none;">terms and conditions</a> *</label>
+            </div>
+
+            <button type="submit">Register</button>
+        </form>
+
+        <div id="tourist-id"></div>
+        <div id="location-status"></div>
+    </main>
+
+    <section id="features">
+        <h3>Why Tourshield?</h3>
+        <div class="feature-list">
+            <article class="feature-item">
+                <h4>Blockchain Tourist ID</h4>
+                <p>Each tourist receives a unique Blockchain-based ID ensuring secure, tamper-proof identity verification and easy access to services.</p>
+            </article>
+            <article class="feature-item">
+                <h4>AI-Powered Geofencing</h4>
+                <p>Real-time location monitoring within North East India helps ensure your safety by alerting authorities if you move outside safe zones, protecting you from high-risk areas.</p>
+            </article>
+            <article class="feature-item">
+                <h4>Emergency Support</h4>
+                <p>Quick access to emergency contacts including health, police, and guides to ensure your safety at all times.</p>
+            </article>
+            <article class="feature-item">
+                <h4>Multi-Language Support</h4>
+                <p>Supports multiple Indian languages including Telugu, Hindi, Urdu, Bengali, Tamil, Kannada, and more to make registration easy and accessible.</p>
+            </article>
+            <article class="feature-item">
+                <h4>Personalized Travel Preferences</h4>
+                <p>Specify your preferred mode of transport and places to visit to get customized travel assistance and recommendations.</p>
+            </article>
+            <article class="feature-item">
+                <h4>Tourist Safety & Support</h4>
+                <p>Emergency contact details and AI monitoring help provide timely assistance, enhancing your safety throughout your journey.</p>
+            </article>
+        </div>
+    </section>
+
+    <div id="panic-popup" class="panic-popup-overlay">
+        <div class="panic-popup">
+            <span class="close-popup" id="closePopup">&times;</span>
+            <h4 style="margin-top:0; color:#e74c3c; font-family: 'Montserrat', sans-serif;">Emergency Contacts</h4>
+            <div class="popup-options">
+                <button class="panic-option">Health Emergency: 108</button>
+                <button class="panic-option">Police Station: 100</button>
+                <button class="panic-option">Guide Assistance: +91 98765 43210</button>
+                <button class="panic-option">Others: +91 12345 67890</button>
+            </div>
+        </div>
+    </div>
+
+    <footer>
+        Tourshield - Next-Gen Innovators - 2025 All rights reserved
+    </footer>
+
+    <script>
+        const NEIndiaBounds = {
+            north: 29.0,
+            south: 20.0,
+            west: 88.0,
+            east: 97.5
+        };
+
+        function isInsideNEIndia(lat, lng) {
+            return lat <= NEIndiaBounds.north && lat >= NEIndiaBounds.south && 
+                   lng >= NEIndiaBounds.west && lng <= NEIndiaBounds.east;
+        }
+
+        function updateLocationStatus(message, isInside) {
+            const locStatus = document.getElementById('location-status');
+            locStatus.textContent = message;
+            locStatus.style.color = isInside ? '#27ae60' : '#c0392b';
+        }
+
+        function checkLocation() {
+            if (!navigator.geolocation) {
+                updateLocationStatus('Geolocation is not supported by your browser.', false);
+                return;
+            }
+
+            navigator.geolocation.getCurrentPosition(
+                (position) => {
+                    const lat = position.coords.latitude;
+                    const lng = position.coords.longitude;
+                    if (isInsideNEIndia(lat, lng)) {
+                        updateLocationStatus(`You are inside the North East India region. (Lat: ${lat.toFixed(2)}, Lng: ${lng.toFixed(2)})`, true);
+                    } else {
+                        updateLocationStatus(`You are outside the North East India region. (Lat: ${lat.toFixed(2)}, Lng: ${lng.toFixed(2)})`, false);
+                    }
+                },
+                () => {
+                    updateLocationStatus('Unable to retrieve your location.', false);
+                }
+            );
+        }
+
+        function showSuccessMessage(message) {
+            const successDiv = document.createElement('div');
+            successDiv.className = 'success-message';
+            successDiv.innerHTML = message;
+            document.body.appendChild(successDiv);
+            
+            setTimeout(() => {
+                successDiv.remove();
+            }, 4000);
+        }
+
+        window.onload = checkLocation;
+
+        const panicBtn = document.getElementById('panic-btn');
+        const popupOverlay = document.getElementById('panic-popup');
+        const closePopup = document.getElementById('closePopup');
+
+        panicBtn.onclick = () => {
+            popupOverlay.style.display = 'flex';
+        };
+
+        closePopup.onclick = () => {
+            popupOverlay.style.display = 'none';
+        };
+
+        window.onclick = (event) => {
+            if (event.target === popupOverlay) {
+                popupOverlay.style.display = 'none';
+            }
+        };
+
+        document.querySelectorAll('.panic-option').forEach(btn => {
+            btn.onclick = () => {
+                showSuccessMessage('🚨 Emergency assistance has been dispatched to your location.<br><strong>Please stay calm and stay where you are.</strong><br>Help is on the way and you are safe now!');
+                popupOverlay.style.display = 'none';
+            };
+        });
+
+        document.getElementById('registration-form').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            const placesSelect = document.getElementById('places');
+            if ([...placesSelect.options].filter(o => o.selected).length === 0) {
+                alert('Please select at least one place to visit.');
+                placesSelect.focus();
+                return;
+            }
+
+            if (!this.agree.checked) {
+                alert('You must agree to the terms and conditions.');
+                this.agree.focus();
+                return;
+            }
+
+            const kycType = this['kyc-type'].value.trim();
+            const kycId = this['kyc-id'].value.trim();
+            
+            if (!kycType) {
+                alert('Please select a KYC document type.');
+                this['kyc-type'].focus();
+                return;
+            }
+            
+            if (!kycId || kycId.length < 6) {
+                alert('Please enter a valid KYC document number.');
+                this['kyc-id'].focus();
+                return;
+            }
+
+            const touristId = "#130049";
+            const touristIdDiv = document.getElementById('tourist-id');
+            touristIdDiv.style.display = 'block';
+            touristIdDiv.innerHTML = `✅ Successfully Registered!<br />Your Tourist ID: <span style="font-size:1.6rem; color:#27ae60; font-weight:800;">${touristId}</span>`;
+            
+            showSuccessMessage('🎉 <strong>Registration Successful!</strong><br>Welcome to Tourshield!<br>Your secure travel experience begins now.');
+        });
+    </script>
 </body>
 </html>
